@@ -41,9 +41,25 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
 
+        // 전역변수 활용
+        // 중복 확인 여부 관리
+        var isDuplicateCheck = false;
+        // 아이디 중복 여부
+        var isDuplicate = true;
+
+        // 초기화
+        // 입력에 변화가 생기면 발생되는 이벤트
+        $("#loginIdInput").on("input", function(){
+            isDuplicateCheck = false;
+            isDuplicate = true;
+            $("#duplicateText").addClass("d-none");
+            $("#availableText").addClass("d-none");
+        })
+
         //중복확인
         $("#duplicatBtn").on("click", function(){
             let loginId = $("#loginIdInput").val();
+
             if(loginId == ""){
                 alert("아이디를 입력하세요");
                 return;
@@ -54,10 +70,16 @@
                , url : "/user/duplicate-id"
                 , data : {"loginId" : loginId}
                 , success: function(response){
-                   if(response.isDuplicate){
+
+                   isDuplicateCheck = true;
+
+                   isDuplicate = response.isDuplicate;
+                   if(isDuplicate){
+                       //isDuplicate = true;
                         $("#duplicateText").removeClass("d-none");
                         $("#availableText").addClass("d-none");
                    } else{
+                       //isDuplicate = false;
                        $("#availableText").removeClass("d-none");
                        $("#duplicateText").addClass("d-none");
                    }
@@ -80,6 +102,19 @@
                 alert("아이디를 입력하세요");
                 return;
             }
+
+            // 중복확인 체크 여부 확인
+            // 중복확인 안한 경우 리턴하기
+            if(!isDuplicateCheck){
+                alert("중복 확인을 해주세요");
+                return;
+            }
+            // 아이디가 중복된 경우
+            if(isDuplicate) {
+                alert("중복 입니다.");
+                return;
+            }
+
             if(password == ""){
                 alert("비밀번호를 입력하세요");
                 return;
@@ -93,13 +128,14 @@
                 return;
             }
 
+
             $.ajax({
                 type : "post"
                 , url : "/user/join-process"
                 , data: {"loginId": loginId, "password":password,"name":name, "email":email}
                 , success : function(response){
                     if(response.result == "success"){
-                        location.href = "/user/login-process"
+                            location.href = "/user/login-process"
                     } else{
                         alert("회원가입 실패")
                     }
@@ -108,6 +144,7 @@
                     alert("회원가입 에러")
                 }
             })
+
 
         })
 
