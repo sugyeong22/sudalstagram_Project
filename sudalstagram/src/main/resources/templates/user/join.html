@@ -8,6 +8,116 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <div id="wrap" class="bg-dark"></div>
+    <div id="wrap" >
+        <header class="d-flex align-items-center justify-content-center p-6">
+            <h1 class="text-center">SudalStagram</h1>
+        </header>
+        <section class="d-flex justify-content-center">
+            <div>
+                <div class="contents p-5 my-3 rounded-lg">
+                    <div class="d-flex justify-content-center mt-3">
+                    <input type="text" class="form-control" placeholder="아이디" id="loginIdInput">
+                    <button type="button" class="btn form-control col-3 btn-dark ml-1" id="duplicatBtn">중복확인</button>
+                    </div>
+                    <div class="small text-success d-none" id="availableText">사용 가능한 ID입니다.</div>
+                    <div class="small text-danger d-none" id="duplicateText">사용 불가능한 ID입니다.</div>
+                    <input type="password" class="form-control mt-2" placeholder="비밀번호" id="passwordInput">
+                    <input type="text" class="form-control mt-2" placeholder="사용자이름" id="nameInput">
+                    <input type="text" class="form-control mt-2" placeholder="이메일" id="emailInput">
+                    <button class="btn btn-dark btn-block mt-3" id="registerBtn">Register</button>
+                </div>
+
+                <h6 class="text-center"> 계정이 있으신가요? </h6>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="form-control mb-4" id="signpageBtn">Sign in</button>
+                </div>
+            </div>
+        </section>
+        <footer class="d-flex justify-content-center align-items-center">
+            <div>Copyright 2021. sudal Co. All rights reserved.</div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+
+        //중복확인
+        $("#duplicatBtn").on("click", function(){
+            let loginId = $("#loginIdInput").val();
+            if(loginId == ""){
+                alert("아이디를 입력하세요");
+                return;
+            }
+
+            $.ajax({
+               type: "get"
+               , url : "/user/duplicate-id"
+                , data : {"loginId" : loginId}
+                , success: function(response){
+                   if(response.isDuplicate){
+                        $("#duplicateText").removeClass("d-none");
+                        $("#availableText").addClass("d-none");
+                   } else{
+                       $("#availableText").removeClass("d-none");
+                       $("#duplicateText").addClass("d-none");
+                   }
+                }
+                , error : function(){
+                   alert("중복확인 에러")
+                }
+            });
+        })
+
+
+        // 회원가입
+        $("#registerBtn").on("click",function(){
+            let loginId = $("#loginIdInput").val();
+            let password = $("#passwordInput").val();
+            let name = $("#nameInput").val();
+            let email = $("#emailInput").val();
+
+            if(loginId == ""){
+                alert("아이디를 입력하세요");
+                return;
+            }
+            if(password == ""){
+                alert("비밀번호를 입력하세요");
+                return;
+            }
+            if(name == ""){
+                alert("이름을 입력하세요");
+                return;
+            }
+            if(email == ""){
+                alert("이메일을 입력하세요");
+                return;
+            }
+
+            $.ajax({
+                type : "post"
+                , url : "/user/join-process"
+                , data: {"loginId": loginId, "password":password,"name":name, "email":email}
+                , success : function(response){
+                    if(response.result == "success"){
+                        location.href = "/user/login-process"
+                    } else{
+                        alert("회원가입 실패")
+                    }
+                }
+                , error : function(){
+                    alert("회원가입 에러")
+                }
+            })
+
+        })
+
+        // 로그인 페이지로 이동
+        $("#signpageBtn").on("click",function(){
+            location.href = "/user/login-process"
+        })
+
+    </script>
+
+
 </body>
 </html>
