@@ -1,13 +1,144 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>회원가입</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <div id="wrap" class="bg-dark"></div>
-</body>
-</html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+        <section layout:fragment="contents" class="d-flex justify-content-center">
+            <div>
+                <div class="contents p-5 my-3 rounded-lg border border-3">
+                    <div class="d-flex justify-content-center mt-3">
+                    <input type="text" class="form-control" placeholder="아이디" id="loginIdInput">
+                    <button type="button" class="btn form-control col-4 btn-dark ml-1" id="duplicatBtn">중복확인</button>
+                    </div>
+                    <div class="small text-success d-none" id="availableText">사용 가능한 ID입니다.</div>
+                    <div class="small text-danger d-none" id="duplicateText">사용 불가능한 ID입니다.</div>
+                    <input type="password" class="form-control mt-2" placeholder="비밀번호" id="passwordInput">
+                    <input type="text" class="form-control mt-2" placeholder="사용자이름" id="nameInput">
+                    <input type="text" class="form-control mt-2" placeholder="이메일" id="emailInput">
+                    <button class="btn btn-dark btn-block mt-3" id="registerBtn">Register</button>
+                </div>
+
+                <h6 class="text-center"> 계정이 있으신가요? </h6>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="form-control mb-4" id="signpageBtn">Sign in</button>
+                </div>
+            </div>
+        </section>
+
+
+        <script layout:fragment="script">
+
+        // 전역변수 활용
+        // 중복 확인 여부 관리
+        var isDuplicateCheck = false;
+        // 아이디 중복 여부
+        var isDuplicate = true;
+
+        // 초기화
+        // 입력에 변화가 생기면 발생되는 이벤트
+        $("#loginIdInput").on("input", function(){
+            isDuplicateCheck = false;
+            isDuplicate = true;
+            $("#duplicateText").addClass("d-none");
+            $("#availableText").addClass("d-none");
+        })
+
+        //중복확인
+        $("#duplicatBtn").on("click", function(){
+            let loginId = $("#loginIdInput").val();
+
+            if(loginId == ""){
+                alert("아이디를 입력하세요");
+                return;
+            }
+
+            $.ajax({
+               type: "get"
+               , url : "/user/duplicate-id"
+                , data : {"loginId" : loginId}
+                , success: function(response){
+
+                   isDuplicateCheck = true;
+
+                   isDuplicate = response.isDuplicate;
+                   if(isDuplicate){
+                       //isDuplicate = true;
+                        $("#duplicateText").removeClass("d-none");
+                        $("#availableText").addClass("d-none");
+                   } else{
+                       //isDuplicate = false;
+                       $("#availableText").removeClass("d-none");
+                       $("#duplicateText").addClass("d-none");
+                   }
+                }
+                , error : function(){
+                   alert("중복확인 에러")
+                }
+            });
+        })
+
+
+        // 회원가입
+        $("#registerBtn").on("click",function(){
+            let loginId = $("#loginIdInput").val();
+            let password = $("#passwordInput").val();
+            let name = $("#nameInput").val();
+            let email = $("#emailInput").val();
+
+            if(loginId == ""){
+                alert("아이디를 입력하세요");
+                return;
+            }
+
+            // 중복확인 체크 여부 확인
+            // 중복확인 안한 경우 리턴하기
+            if(!isDuplicateCheck){
+                alert("중복 확인을 해주세요");
+                return;
+            }
+            // 아이디가 중복된 경우
+            if(isDuplicate) {
+                alert("중복 입니다.");
+                return;
+            }
+
+            if(password == ""){
+                alert("비밀번호를 입력하세요");
+                return;
+            }
+            if(name == ""){
+                alert("이름을 입력하세요");
+                return;
+            }
+            if(email == ""){
+                alert("이메일을 입력하세요");
+                return;
+            }
+
+
+            $.ajax({
+                type : "post"
+                , url : "/user/join-process"
+                , data: {"loginId": loginId, "password":password,"name":name, "email":email}
+                , success : function(response){
+                    if(response.result == "success"){
+                            location.href = "/user/login-process"
+                    } else{
+                        alert("회원가입 실패")
+                    }
+                }
+                , error : function(){
+                    alert("회원가입 에러")
+                }
+            })
+
+
+        })
+
+        // 로그인 페이지로 이동
+        $("#signpageBtn").on("click",function(){
+            location.href = "/user/login-proces"
+        })
+
+    </script>

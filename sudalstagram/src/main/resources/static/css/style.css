@@ -3,3 +3,13 @@
     height: 700px;
     margin: 0 auto;
 }
+
+header{
+    height:150px;
+}
+
+.contents {
+    width: 700px;
+    border: solid;
+    border-color: #dddddd;
+}

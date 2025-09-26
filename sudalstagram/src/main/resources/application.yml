@@ -13,7 +13,7 @@ spring:
   mvc:
     static-path-pattern: /static/**
 
-    mybatis:
-      mapper-locations: mappers/*Mapper.xml
-      configuration:
-        map-underscore-to-camel-case: true
+mybatis:
+  mapper-locations: mappers/*Mapper.xml
+  configuration:
+     map-underscore-to-camel-case: true
