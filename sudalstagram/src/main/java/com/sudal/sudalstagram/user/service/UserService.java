@@ -1,6 +1,7 @@
 package com.sudal.sudalstagram.user.service;
 
 import com.sudal.sudalstagram.common.SHAHashingEncoder;
+import com.sudal.sudalstagram.user.domain.User;
 import com.sudal.sudalstagram.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,14 @@ public class UserService {
         } else{
             return true;
         }
+    }
+
+    // 로그인
+    public User getUser(String loginId, String password){
+
+        String encodedpassword = SHAHashingEncoder.encode(password);
+
+        return userRepository.selectUser(loginId, encodedpassword);
     }
 
 }

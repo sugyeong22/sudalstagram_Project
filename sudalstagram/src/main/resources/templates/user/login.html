@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+
+    <section layout:fragment="contents">
+
+        <div class="d-flex justify-content-center p-3">
+            <img src="https://i.pinimg.com/736x/f9/f9/35/f9f935455fc3e297115e868968f77644.jpg" width="30%">
+            <div class="contents p-5 rounded-lg border border-3 ml-3">
+                <input type="text" class="form-control" placeholder="아이디" id="loginIdInput">
+                <input type="password" class="form-control mt-2" placeholder="비밀번호" id="passwordInput">
+                <button class="btn btn-dark btn-block mt-3 mb-1" id="loginBtn">Sing in</button>
+                <a href="#">Forget password?</a>
+                <h6 class="text-center mt-3"> 계정이 없으신가요? </h6>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="form-control mb-4 btn-sm col-4" id="registerBtn">Register</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script layout:fragment="script">
+        $("#loginBtn").on("click",function(){
+            let loginId = $("#loginIdInput").val();
+            let password = $("#passwordInput").val();
+
+            if(loginId == ""){
+                alert("아이디를 입력하세요");
+                return;
+            }
+
+            if(password == ""){
+                alert("비밀번호를 입력하세요");
+                return;
+            }
+
+            $.ajax({
+                type:"post"
+                , url: "/user/login-process"
+                , data: {"loginId":loginId, "password":password}
+                , success: function(response){
+                    if(response.result == "success"){
+                        location.href = "/post/timeline"
+                    } else{
+                        alert("로그인 아이디 비밀번호를 확인하세요.")
+                    }
+                }
+                , error: function(){
+                    alert("로그인 에러")
+                }
+            })
+
+        });
+    </script>

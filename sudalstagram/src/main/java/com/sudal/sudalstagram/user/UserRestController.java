@@ -1,5 +1,6 @@
 package com.sudal.sudalstagram.user;
 
+import com.sudal.sudalstagram.user.domain.User;
 import com.sudal.sudalstagram.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,25 @@ public class UserRestController {
         }
         return resultMap;
     }
+
+    // 로그인 API
+    @PostMapping("/login-process")
+    public Map<String, String> login(
+            @RequestParam String loginId
+            , @RequestParam String password
+    ){
+        User user = userService.getUser(loginId, password);
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        if(user != null){
+            resultMap.put("result","success");
+        } else {
+            resultMap.put("result","fail");
+        }
+
+        return resultMap;
+    };
 
 
 
