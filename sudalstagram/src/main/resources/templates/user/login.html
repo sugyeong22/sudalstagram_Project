@@ -8,11 +8,15 @@
     <section layout:fragment="contents">
 
         <div class="d-flex justify-content-center p-3">
-            <img src="https://i.pinimg.com/736x/f9/f9/35/f9f935455fc3e297115e868968f77644.jpg" width="30%">
-            <div class="contents p-5 rounded-lg border border-3 ml-3">
+            <img src="https://i.pinimg.com/736x/f9/f9/35/f9f935455fc3e297115e868968f77644.jpg" width="50%">
+            <div class="contents p-5 rounded-lg ml-3">
+
+                <form id="loginForm">
                 <input type="text" class="form-control" placeholder="아이디" id="loginIdInput">
                 <input type="password" class="form-control mt-2" placeholder="비밀번호" id="passwordInput">
-                <button class="btn btn-dark btn-block mt-3 mb-1" id="loginBtn">Sing in</button>
+                <button type="submit" class="btn btn-dark btn-block mt-3 mb-1" id="loginBtn">Sing in</button>
+                </form>
+
                 <a href="#">Forget password?</a>
                 <h6 class="text-center mt-3"> 계정이 없으신가요? </h6>
                 <div class="d-flex justify-content-center">
@@ -24,7 +28,12 @@
     </section>
 
     <script layout:fragment="script">
-        $("#loginBtn").on("click",function(){
+        // 이렇게 바꿔야 버튼을 클릭하거나 엔터를 눌렀을때 실행되도록 바뀜
+        $("#loginForm").on("submit",function(e){
+
+            // 해당 이벤트의 추가 기능을 취소! (submit 취소)
+            e.preventDefault()
+
             let loginId = $("#loginIdInput").val();
             let password = $("#passwordInput").val();
 
@@ -44,7 +53,7 @@
                 , data: {"loginId":loginId, "password":password}
                 , success: function(response){
                     if(response.result == "success"){
-                        location.href = "/post/timeline"
+                        location.href = "/post/timeline";
                     } else{
                         alert("로그인 아이디 비밀번호를 확인하세요.")
                     }

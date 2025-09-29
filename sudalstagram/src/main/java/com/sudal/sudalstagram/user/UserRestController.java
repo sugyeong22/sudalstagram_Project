@@ -2,6 +2,8 @@ package com.sudal.sudalstagram.user;
 
 import com.sudal.sudalstagram.user.domain.User;
 import com.sudal.sudalstagram.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,12 +58,18 @@ public class UserRestController {
     public Map<String, String> login(
             @RequestParam String loginId
             , @RequestParam String password
+            , HttpServletRequest request
     ){
         User user = userService.getUser(loginId, password);
 
         Map<String, String> resultMap = new HashMap<>();
 
         if(user != null){
+            // 로그인 성공시 세션에 값 저장하여 정보 유지
+            HttpSession session = request.getSession();
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("userName", user.getName());
+
             resultMap.put("result","success");
         } else {
             resultMap.put("result","fail");

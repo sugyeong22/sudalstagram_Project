@@ -10,6 +10,24 @@ header{
 
 .contents {
     width: 700px;
+    height: 500px;
     border: solid;
     border-color: #dddddd;
+}
+
+.main-menu{
+    width: 200px;
+    height:700px;
+    background-color: #dddddd;
+    font-weight: bold;
+    font-size: large;
+}
+
+.nav{
+    height : 250px;
+}
+
+.main-post{
+    width: 1000px;
+    height: 700px;
 }

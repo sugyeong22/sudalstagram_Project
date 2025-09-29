@@ -1,5 +1,7 @@
 package com.sudal.sudalstagram.user;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,4 +19,23 @@ public class UserController {
     public String loginFrom(){
         return "user/login";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+
+        session.invalidate();
+
+        return "redirect:/user/login";
+
+    }
+
+// 이런 방법도 가능함.
+//    public String logout(HttpSession session){
+//        session.invalidate();
+//
+//        return "redirect:/user/login";
+//
+//    }
 }
