@@ -12,4 +12,9 @@ public class TimeLineController {
     public String timeline(){
         return "post/timeline";
     }
+
+    @GetMapping("write")
+    public String postForm(){
+        return "post/write";
+    }
 }

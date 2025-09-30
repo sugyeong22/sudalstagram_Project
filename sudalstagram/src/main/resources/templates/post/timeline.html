@@ -2,34 +2,48 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default}">
+      layout:decorate="~{layouts/main}">
 
     <section layout:fragment="contents">
-        <div id="wrap" class="d-flex justify-content-center">
-            <nav class="main-menu ">
-                <ul class="nav d-flex justify-content-between flex-column">
-                        <li class="nav-item d-flex justify-content-center align-items-center mt-3">
-                            <i class="bi bi-house-door-fill"></i>
-                            <a href="#" class="nav-link text-dark">홈</a>
-                        </li>
-                    <li class="nav-item d-flex justify-content-center align-items-center">
-                        <i class="bi bi-search"></i>
-                        <a href="#" class="nav-link text-dark">검색</a>
-                    </li>
-                    <li class="nav-item d-flex justify-content-center align-items-center">
-                        <i class="bi bi-plus-square"></i>
-                        <a href="#" class="nav-link text-dark">만들기</a>
-                    </li>
-                    <li class="nav-item d-flex justify-content-center align-items-center">
-                        <i class="bi bi-person-fill"></i>
-                        <a href="#" class="nav-link text-dark">프로필</a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="main-post bg-warning">
+        <div class="main-post d-flex justify-content-center">
+            <table class="border">
+                <tbody>
+                    <tr>
+                        <td><i class="bi bi-person-circle"></i></td>
+                        <td colspan="2"><div>simsim.here</div></td>
+                        <td><button>...</button></td>
+                    </tr>
+                <tr>
+                    <td colspan="4">
+                        <img width="500" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-heart"></i></td>
+                    <td>23</td>
+                    <td><i class="bi bi-chat"></i></td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td rowspan="2"><i class="bi bi-person-circle"></i></td>
+                    <td colspan="3">bbrrdddd</td>
+                </tr>
+                <tr>
+                    <td colspan="3">너무 예뻐요</td>
+                </tr>
+                <tr>
+                    <td rowspan="2"><i class="bi bi-person-circle"></i></td>
+                    <td colspan="3">eun.eni</td>
+                </tr>
+                <tr>
+                    <td colspan="3">이렇게 사진찍어봐야겠다</td>
+                </tr>
 
-            </div>
-
+                </tbody>
+            </table>
         </div>
-
+        <div class="d-flex justify-content-center">
+            <input type="text" class="form-control col-8">
+            <button type="button" class="btn btn-secondary">입력</button>
+        </div>
     </section>
