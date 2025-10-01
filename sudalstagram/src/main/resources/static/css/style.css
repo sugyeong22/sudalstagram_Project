@@ -19,10 +19,14 @@ header{
     width: 600px;
 }
 
+
 .main-content{
     width: 1000px;
 }
 
+.main-post{
+    width:1000px;
+}
 
 .main-menu{
     width: 200px;

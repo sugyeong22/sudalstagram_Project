@@ -5,45 +5,56 @@
       layout:decorate="~{layouts/main}">
 
     <section layout:fragment="contents">
-        <div class="main-post d-flex justify-content-center">
-            <table class="border">
-                <tbody>
-                    <tr>
-                        <td><i class="bi bi-person-circle"></i></td>
-                        <td colspan="2"><div>simsim.here</div></td>
-                        <td><button>...</button></td>
-                    </tr>
-                <tr>
-                    <td colspan="4">
-                        <img width="500" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
-                    </td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-heart"></i></td>
-                    <td>23</td>
-                    <td><i class="bi bi-chat"></i></td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td rowspan="2"><i class="bi bi-person-circle"></i></td>
-                    <td colspan="3">bbrrdddd</td>
-                </tr>
-                <tr>
-                    <td colspan="3">너무 예뻐요</td>
-                </tr>
-                <tr>
-                    <td rowspan="2"><i class="bi bi-person-circle"></i></td>
-                    <td colspan="3">eun.eni</td>
-                </tr>
-                <tr>
-                    <td colspan="3">이렇게 사진찍어봐야겠다</td>
-                </tr>
 
-                </tbody>
-            </table>
+        <div th:each="post:${postAllList}" class="main-post d-flex justify-content-center">
+            <div class="border my-2">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><i class="bi bi-person-circle"></i></td>
+                            <td colspan="2"><div th:text="${post.userId}">simsim.here</div></td>
+                            <td class="d-flex justify-content-end"><button>...</button></td>
+                        </tr>
+                    <tr>
+                        <td colspan="4">
+                            <img width="500" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><i class="bi bi-person-circle"></i></td>
+                        <td colspan="3"><b>simsim.here</b></td>
+                    </tr>
+                    <tr>
+                        <td th:text="${post.contents}" colspan="3">인사 hehe </td>
+                    </tr>
+                    <tr>
+                        <td><i class="bi bi-heart"></i></td>
+                        <td><b>23</b></td>
+                        <td><i class="bi bi-chat"></i></td>
+                        <td><b>2</b></td>
+                    </tr>
+                    <!-- 댓글 -->
+                    <tr>
+                        <td rowspan="2"><i class="bi bi-person-circle"></i></td>
+                        <td colspan="3"><b>brrdddd</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">너무 예뻐요</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><i class="bi bi-person-circle"></i></td>
+                        <td colspan="3"><b>eun.eni</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">이렇게 사진찍어봐야겠다</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                    <input type="text" class="form-control col-10">
+                    <button type="button" class="btn btn-secondary">입력</button>
+                </div>
+            </div>
         </div>
-        <div class="d-flex justify-content-center">
-            <input type="text" class="form-control col-8">
-            <button type="button" class="btn btn-secondary">입력</button>
-        </div>
+
     </section>
