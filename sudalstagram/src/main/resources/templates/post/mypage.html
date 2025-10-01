@@ -5,15 +5,19 @@
       layout:decorate="~{layouts/main}">
 
 <section layout:fragment="contents">
-    <div class="ml-4 mt-4 d-flex justify-content-start align-items-center">
+    <div class="ml-4 mt-3 d-flex justify-content-start align-items-center">
         <i class="bi bi-person-circle mr-2" style="font-size: 7rem;"></i>
-        <div th:text="${session.userName}" style="font-size: 70px;"> 사용자 이름</div>
+        <div class="ml-4">
+            <div th:text="${session.userName}" style="font-size: 50px;"> 사용자 이름</div>
+            <div style="font-size: 30px;"> 32 </div>
+            <h6>게시물</h6>
+        </div>
     </div>
 
     <table>
         <tbody>
             <tr th:each="post :${postList}">
-                <img width="500" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
+                <img width="300" height="300" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
             </tr>
         </tbody>
     </table>
