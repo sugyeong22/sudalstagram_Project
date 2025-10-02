@@ -49,4 +49,20 @@
 
     </select>
 
+    <select id="selectUserById" parameterType="long"
+            resultType="com.sudal.sudalstagram.user.domain.User">
+        SELECT
+            `id`
+             ,`login_id`
+             , `password`
+             ,`name`
+             ,`email`
+             ,`created_at`
+             ,`updated_at`
+        FROM
+            `user`
+        WHERE
+            `id` = #{id}
+    </select>
+
 </mapper>

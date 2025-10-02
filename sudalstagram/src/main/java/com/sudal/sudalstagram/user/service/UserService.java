@@ -53,4 +53,9 @@ public class UserService {
         return userRepository.selectUser(loginId, encodedpassword);
     }
 
+    //
+    public User getUserById(long id){
+        return userRepository.selectUserById(id);
+    }
+
 }

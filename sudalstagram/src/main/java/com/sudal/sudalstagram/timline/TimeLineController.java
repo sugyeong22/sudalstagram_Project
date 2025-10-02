@@ -1,5 +1,6 @@
 package com.sudal.sudalstagram.timline;
 
+import com.sudal.sudalstagram.timline.dto.TimeDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import com.sudal.sudalstagram.timline.domain.Timeline;
@@ -38,7 +39,7 @@ public class TimeLineController {
     @GetMapping("/timeline")
     public String timeline(
             Model model){
-        List<Timeline> postAllList = timelineService.getAllPostList();
+        List<TimeDto> postAllList = timelineService.getAllPostList();
         model.addAttribute("postAllList", postAllList);
         return "post/timeline";
     }
