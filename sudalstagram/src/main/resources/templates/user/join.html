@@ -123,8 +123,9 @@
                 , data: {"loginId": loginId, "password":password,"name":name, "email":email}
                 , success : function(response){
                     if(response.result == "success"){
-                            location.href = "/user/login-process"
+                            location.href = "/user/login"
                     } else{
+
                         alert("회원가입 실패")
                     }
                 }
@@ -138,7 +139,7 @@
 
         // 로그인 페이지로 이동
         $("#signpageBtn").on("click",function(){
-            location.href = "/user/login-proces"
+            location.href = "/user/login"
         })
 
     </script>

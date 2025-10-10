@@ -17,12 +17,12 @@
                         </tr>
                     <tr>
                         <td colspan="4">
-                            <img width="500" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
+                            <img width="500" th:src="${post.imagePath}" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
                         </td>
                     </tr>
                     <tr>
                         <td rowspan="2"><i class="bi bi-person-circle"></i></td>
-                        <td colspan="3"><b>simsim.here</b></td>
+                        <td colspan="3"><b th:text="${post.loginId}">simsim.here</b></td>
                     </tr>
                     <tr>
                         <td th:text="${post.contents}" colspan="3">인사 hehe </td>

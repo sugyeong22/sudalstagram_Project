@@ -8,12 +8,14 @@ import lombok.Getter;
 @Getter
 public class TimeDto {
 
-    // 프라이머리키
+    // 관련된 프라이머리키
     private long id; //게시글
     private long userId; // 작성자
 
-    private String loginId;
-    private String contents;
+    private String loginId; // 작성자
+    private String contents; // 게시글 내용
+
+    private String imagePath;
 
 
 

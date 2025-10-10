@@ -17,7 +17,7 @@
     <table>
         <tbody>
             <tr th:each="post :${postList}">
-                <img width="300" height="300" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg">
+                <img th:src="${post.imagePath}" width="300" height="300" src="https://i.pinimg.com/736x/8a/bc/8f/8abc8f2117c2453bfcc33b48a2183612.jpg" class="my-1 mr-1">
             </tr>
         </tbody>
     </table>

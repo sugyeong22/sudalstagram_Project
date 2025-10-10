@@ -1,5 +1,6 @@
 package com.sudal.sudalstagram.timline.service;
 
+import com.sudal.sudalstagram.common.FileManager;
 import com.sudal.sudalstagram.timline.domain.Timeline;
 import com.sudal.sudalstagram.timline.dto.TimeDto;
 import com.sudal.sudalstagram.timline.repository.TimelineRepostitory;
@@ -8,6 +9,7 @@ import com.sudal.sudalstagram.user.service.UserService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +26,17 @@ public class TimelineService {
     }
 
     // 게시글 저장 API
-    public boolean createtimeline(long userId, String contents){
+    public boolean createtimeline(
+            long userId
+            , String contents
+            , MultipartFile file){
+
+        String imagePath = FileManager.saveFile(userId, file);
+
         Timeline timeline = Timeline.builder()
                 .userId(userId)
                 .contents(contents)
+                .imagePath(imagePath)
                 .build();
 
         try{
@@ -60,6 +69,7 @@ public class TimelineService {
                    .userId(time.getUserId())
                    .contents(time.getContents())
                    .loginId(user.getLoginId())
+                   .imagePath(time.getImagePath())
                    .build();
 
            timeDtoList.add(timeDto);

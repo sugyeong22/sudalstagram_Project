@@ -48,4 +48,9 @@ public class TimeLineController {
     public String postForm(){
         return "post/write";
     }
+
+    @GetMapping("/detail")
+    public String detail(){
+        return "post/detail";
+    }
 }

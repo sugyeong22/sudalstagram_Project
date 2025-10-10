@@ -28,6 +28,13 @@
     </section>
 
     <script layout:fragment="script">
+
+        // 회원가입 페이지로 이동
+        $("#registerBtn").on("click",function(){
+            location.href = "/user/join"
+        })
+
+
         // 이렇게 바꿔야 버튼을 클릭하거나 엔터를 눌렀을때 실행되도록 바뀜
         $("#loginForm").on("submit",function(e){
 
