@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LikeService {
 
-    private LikeRepository likeRepository;
+    private final LikeRepository likeRepository;
 
     public LikeService(LikeRepository likeRepository) {
         this.likeRepository = likeRepository;

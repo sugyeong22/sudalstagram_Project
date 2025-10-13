@@ -28,7 +28,7 @@
                         <td th:text="${post.contents}" colspan="3">인사 hehe </td>
                     </tr>
                     <tr>
-                        <td><i class="bi bi-heart"></i></td>
+                        <td><i class="bi bi-heart like-Btn" th:data-post-id="${post.id}"></i></td>
                         <td><b>23</b></td>
                         <td><i class="bi bi-chat"></i></td>
                         <td><b>2</b></td>
@@ -52,9 +52,40 @@
                 </table>
                 <div class="d-flex justify-content-center">
                     <input type="text" class="form-control col-10">
-                    <button type="button" class="btn btn-secondary">입력</button>
+                    <button type="button" class="btn btn-secondary comment-Btn" th:data-post-id="${post.id}">입력</button>
                 </div>
             </div>
         </div>
 
     </section>
+
+
+    <script layout:fragment="script">
+        $(".like-Btn").on("click", function(){
+           // this 는 이벤트가 발생한 그 태그 객체이므로 각각을 의미
+            let postId = $(this).data("post-id");
+
+            $.ajax({
+                type:"post"
+                , url: "/post/like"
+                , data:{"postId" : postId}
+                , success:function(responce) {
+                    if (responce.result == "success") {
+                        location.reload();
+                    } else {
+                        alert("좋아요 실패")
+                    }}
+                ,error: function(){
+                    alert("좋아요 에러")
+                }
+            })
+        });
+
+        $(".comment-Btn").on("click", function(){
+
+            let postId = $(this).data("post-id");
+
+            alert(postId);
+        })
+
+    </script>
