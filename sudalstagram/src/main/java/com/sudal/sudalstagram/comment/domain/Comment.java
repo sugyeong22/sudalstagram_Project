@@ -11,11 +11,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Table(name="`comment`")
 @Entity
-public class Comment {
+public class Comment{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

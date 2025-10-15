@@ -38,9 +38,15 @@ public class TimeLineController {
 
     @GetMapping("/timeline")
     public String timeline(
-            Model model){
-        List<TimeDto> postAllList = timelineService.getAllPostList();
+            HttpSession session
+            ,Model model){
+
+        long userId = (long)session.getAttribute("userId");
+
+        List<TimeDto> postAllList = timelineService.getAllPostList(userId);
+
         model.addAttribute("postAllList", postAllList);
+
         return "post/timeline";
     }
 

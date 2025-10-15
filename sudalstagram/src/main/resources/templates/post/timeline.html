@@ -28,30 +28,28 @@
                         <td th:text="${post.contents}" colspan="3">인사 hehe </td>
                     </tr>
                     <tr>
-                        <td><i class="bi bi-heart like-Btn" th:data-post-id="${post.id}"></i></td>
-                        <td><b>23</b></td>
+                        <td>
+                            <i th:if="${post.isLike}" class="bi bi-heart-fill text-danger"></i>
+                            <i th:unless="${post.isLike}" class="bi bi-heart like-Btn text-danger" th:data-post-id="${post.id}"></i>
+                        </td>
+                        <td><b><span th:text="${post.likeCount}">23</span></b></td>
                         <td><i class="bi bi-chat"></i></td>
                         <td><b>2</b></td>
                     </tr>
                     <!-- 댓글 -->
+                        <div th:each="comment:${post.commentList}">
                     <tr>
                         <td rowspan="2"><i class="bi bi-person-circle"></i></td>
-                        <td colspan="3"><b>brrdddd</b></td>
+                        <td colspan="3"><b><span th:text="${comment.loginId}">brrdddd</span></b></td>
                     </tr>
                     <tr>
-                        <td colspan="3">너무 예뻐요</td>
+                        <td colspan="3"><span th:text="${comment.contents}">너무 예뻐요</span></td>
                     </tr>
-                    <tr>
-                        <td rowspan="2"><i class="bi bi-person-circle"></i></td>
-                        <td colspan="3"><b>eun.eni</b></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">이렇게 사진찍어봐야겠다</td>
-                    </tr>
+                        </div>
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
-                    <input type="text" class="form-control col-10">
+                    <input type="text" class="form-control col-10" th:id="|commentInput${post.id}|">
                     <button type="button" class="btn btn-secondary comment-Btn" th:data-post-id="${post.id}">입력</button>
                 </div>
             </div>
@@ -85,7 +83,23 @@
 
             let postId = $(this).data("post-id");
 
-            alert(postId);
-        })
+            let contents = $("#commentInput" + postId).val();
+
+            $.ajax({
+                type:"post"
+                , url: "/post/comment/write"
+                , data:{"postId":postId, "contents":contents}
+                ,success:function(response){
+                    if(response.result == "success"){
+                        location.reload();
+                    }else{
+                        alert("댓글 작성 실패")
+                    }
+                }
+                ,error: function(){
+                    alert("댓글 작성 에러")
+                }
+            });
+        });
 
     </script>
