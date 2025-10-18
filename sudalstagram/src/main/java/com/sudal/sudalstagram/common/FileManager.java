@@ -54,7 +54,37 @@ public class FileManager {
         // 클라이언트가 접근 할 수 있는 url 을 return
         return "/images" + directoryName + "/" + file.getOriginalFilename();
 
-
     }
+
+    public static boolean removeFile(String imagePath){
+        if(imagePath == null){
+            return false;
+        }
+
+        String fullFilePath =  FILE_UPLOAD_PATH + imagePath.replace("/images","");
+
+        Path path = Paths.get(fullFilePath);
+
+        Path directoryPath = path.getParent();
+
+        try {
+            Files.delete(path);
+            Files.delete(directoryPath);
+        } catch (IOException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
 }
 

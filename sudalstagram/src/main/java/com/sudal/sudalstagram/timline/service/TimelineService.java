@@ -10,6 +10,7 @@ import com.sudal.sudalstagram.timline.dto.TimeDto;
 import com.sudal.sudalstagram.timline.repository.TimelineRepostitory;
 import com.sudal.sudalstagram.user.domain.User;
 import com.sudal.sudalstagram.user.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // 필수 멤버변수에 대한 초기화 생성자
 // final 이 붙은것들만 생성자로 만듬
@@ -106,7 +108,30 @@ public class TimelineService {
     }
 
 
+    @Transactional
+    public boolean deletePost(long id, long userId){
 
+        Optional<Timeline> optionalTimeline = timelineRepostitory.findById(id);
+
+        if(optionalTimeline.isPresent()){
+
+            Timeline timeline = optionalTimeline.get();
+
+            if(timeline.getUserId() != userId){
+                return false;
+            }
+
+            FileManager.removeFile(timeline.getImagePath());
+            likeService.deleteByPostId(timeline.getId());
+            commentService.deleteByPostId(timeline.getId());
+            timelineRepostitory.delete(timeline);
+
+        } else{
+            return false;
+        }
+
+        return true;
+    }
 
 
 

@@ -2,10 +2,7 @@ package com.sudal.sudalstagram.timline;
 
 import com.sudal.sudalstagram.timline.service.TimelineService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -40,4 +37,30 @@ public class TimeLineRestController {
         }
         return resultMap;
     }
+
+    @DeleteMapping("/remove")
+    public Map<String, String> removePost(
+            @RequestParam long id
+            , HttpSession session
+    ){
+        Map<String, String> resultMap = new HashMap<>();
+
+        long userId = (long)session.getAttribute("userId");
+
+        if(timelineService.deletePost(id, userId)){
+            resultMap.put("result","success");
+        }else{
+            resultMap.put("result","fail");
+        }
+
+        return resultMap;
+    }
+
+
+
+
+
+
+
+
 }

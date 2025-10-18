@@ -13,7 +13,7 @@
                         <tr>
                             <td><i class="bi bi-person-circle"></i></td>
                             <td colspan="2"><div th:text="${post.loginId}">simsim.here</div></td>
-                            <td class="d-flex justify-content-end"><button>...</button></td>
+                            <td th:if="${post.userId == session.userId}" class="d-flex justify-content-end more-btn" th:data-post-id="${post.id}" data-toggle="modal" data-target="#ModalCenter"><button>...</button></td>
                         </tr>
                     <tr>
                         <td colspan="4">
@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <i th:if="${post.isLike}" class="bi bi-heart-fill text-danger"></i>
+                            <i th:if="${post.isLike}" class="bi bi-heart-fill text-danger unlike-btn" th:data-post-id="${post.id}"></i>
                             <i th:unless="${post.isLike}" class="bi bi-heart like-Btn text-danger" th:data-post-id="${post.id}"></i>
                         </td>
                         <td><b><span th:text="${post.likeCount}">23</span></b></td>
@@ -55,10 +55,73 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <a href="#" id="removeBtn">삭제하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
 
     <script layout:fragment="script">
+
+        $(".more-btn").on("click",function(){
+            // 삭제하기 버튼에 현재 클릭된 태그로 부터 얻어온 삭제 대상 postId를
+            // data-post-id 속성 값으로 추가한다.
+
+            let postId = $(this).data("post-id");
+
+            $("#removeBtn").data("post-id",postId);
+        });
+
+        $("#removeBtn").on("click", function(){
+            let postId = $(this).data("post-id");
+
+            $.ajax({
+                type:"delete"
+                , url: "/post/remove"
+                ,data: {"id":postId}
+                ,success: function(responce){
+                    if (responce.result == "success") {
+                        location.reload();
+                    } else {
+                        alert("삭제 실패")
+                    }
+                }
+                ,error: function(){
+                    alert("삭제 에러")
+                }
+            })
+        })
+
+        $(".unlike-btn").on("click", function(){
+            let postId = $(this).data("post-id");
+
+            $.ajax({
+                type:"delete"
+                , url: "/post/unlike"
+                , data: {"postId" : postId}
+                , success: function (responce){
+                    if (responce.result == "success") {
+                        location.reload();
+                    } else {
+                        alert("좋아요 취소 실패")
+                    }
+                    }
+                ,error: function(){
+                    alert("좋아요 취소 에러")
+                }
+            })
+
+        });
+
+
         $(".like-Btn").on("click", function(){
            // this 는 이벤트가 발생한 그 태그 객체이므로 각각을 의미
             let postId = $(this).data("post-id");
